@@ -32,6 +32,7 @@
             ],
             "js": [
                 "lib/jquery-2.1.4.min.js",
+                "lib/jquery.search.js",
                 "content-script.js"
             ],
             "run_at": "document_end"

@@ -46,6 +46,14 @@
             comments: ".reply_link",
             ads_news: ".ads_ads_news_wrap"
         },
+        keywordsToFind = {
+            please_share : 1,
+            freebie : 1,
+            ask : 1,
+            pets : 1,
+            anon : 1,
+            other : 1
+        },
         feed = document.querySelector("#feed_rows"),
         url = location.href,
         observer,
@@ -67,7 +75,7 @@
         elem.classList.remove(newClassName);
     }
 
-    function find(settingName) {
+    function findSelector(settingName) {
         var selector = selectorsToFind[settingName],
             els = feed.querySelectorAll(selector),
             newClassName = "cffvk-" + settingName;
@@ -76,12 +84,31 @@
             processFeedItem(el, settings[settingName], newClassName);
         });
     }
+    function findKeywords(settingName) {
+        var keywordsInputName = settingName + "_keywords";
+        // Если ключевые слова не заданы, игнорируем настройку.
+        if (!(keywordsInputName in settings)) {
+            return;
+        }
+        var keywords = settings[keywordsInputName];
+        var isEnabled = settings[settingName];
+        var $feedRows = $(feed).find(".feed_row");
+        var els = (p.match(/[^\s]+/g) === null) 
+                ? $feedRows.search(keywords)
+                : $feedRows.orSearch(keywords);
+        var newClassName = "cffvk-" + settingName;
+
+        $.each(els, function (index, el) {
+            processFeedItem(el, isEnabled, newClassName);
+        });
+    }
 
     function clean(receivedSettings) {
         if (receivedSettings) {
             settings = receivedSettings;
         }
-        Object.keys(selectorsToFind).forEach(find);
+        Object.keys(selectorsToFind).forEach(findSelector);
+        Object.keys(keywordsToFind).forEach(findKeywords);
         console.log("CFFVK: your feed has been cleaned");
     }
 

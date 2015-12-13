@@ -1,42 +1,52 @@
 // Сохраняем настройки в локальное хранилище "chrome.storage".
-function save_options() {
-    var email = $('input#email').val();
-    var pass1 = $('input#pass1').val();
-    var pass2 = $('input#pass2').val();
-    var pass3 = $('input#pass3').val();
-    chrome.storage.sync.set({
-        email: email,
-        pass1: pass1,
-        pass2: pass2,
-        pass3: pass3
-    }, function() {
-        // Обновляем статус. Уведомляем пользователя, что настройки были сохранены.
-        renderStatus('Настройки сохранены.');
-        /*
-        var status = document.getElementById('status');
-        status.textContent = 'Настройки сохранены.';
-        */
-    });
+function save_options(options_list) {
+    var optionsValues = {};
+    for (var i = 0; i < options_list.length; i++) {
+        var optionName = options_list[i];
+        var inputId = 'input#' + optionName;
+        optionsValues[optionName] = $(inputId).val();
+    }
+    chrome.storage.sync.set(
+        optionsValues, 
+        function() {
+            // Обновляем статус. Уведомляем пользователя, что настройки были сохранены.
+            renderStatus('Настройки сохранены.');
+        }
+    );
 }
 
 // Загружаем настройки из локального хранилища "chrome.storage".
-function restore_options() {
-        chrome.storage.sync.get({
-        email: '',
-        pass1: '',
-        pass2: '',
-        pass3: ''
-    }, function(items) {
-        $('input#email').val(items.email);
-        $('input#pass1').val(items.pass1);
-        $('input#pass2').val(items.pass2);
-        $('input#pass3').val(items.pass3);
-    });
+function restore_options(options_list) {
+    var optionsDefaults = {};
+    for (var i = 0; i < options_list.length; i++) {
+        var optionName = options_list[i];
+        var inputId = 'input#' + optionName;
+        optionsDefaults[optionName] = $(inputId).attr("placeholder");
+    }
+    chrome.storage.sync.get(
+        optionsDefaults, 
+        function(items) {
+            for (var i = 0; i < options_list.length; i++) {
+                var optionName = options_list[i];
+                var inputId = 'input#' + optionName;
+                $(inputId).val(items[optionName]);
+            }
+        }
+    );
 }
 
 $(function() {
-    restore_options();
+    var options_list = [
+        "please_share_keywords",
+        "freebie_keywords",
+        "ask_keywords",
+        "pets_keywords",
+        "anon_keywords",
+        "other_keywords"
+    ];
+
+    restore_options(options_list);
     $('#save').click(function() {
-        save_options();
+        save_options(options_list);
     });
 });
