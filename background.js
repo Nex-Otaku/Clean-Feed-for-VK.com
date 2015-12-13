@@ -15,6 +15,7 @@
             "likes",
             "comments",
             "ads_news",
+            "promoted_post",
             
             // keywords
             "please_share",

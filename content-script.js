@@ -44,7 +44,8 @@
             wall_post_more: ".wall_post_more",
             likes: ".post_like_icon.no_likes",
             comments: ".reply_link",
-            ads_news: ".ads_ads_news_wrap"
+            ads_news: ".ads_ads_news_wrap",
+            promoted_post: ".wall_text_name_explain_promoted_post"
         },
         keywordsToFind = {
             please_share : 1,
