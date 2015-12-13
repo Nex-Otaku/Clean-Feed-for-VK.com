@@ -23,7 +23,12 @@
             "ask",
             "pets",
             "anon",
-            "other"
+            "other",
+            
+            // content filters
+            "without_pic",
+            "without_text",
+            "short_text"
         ],
         css = {
             groups: "[id^='feed_repost-'], [id^='feed_reposts_'] " +

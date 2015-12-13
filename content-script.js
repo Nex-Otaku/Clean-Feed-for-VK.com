@@ -55,6 +55,20 @@
             anon : 1,
             other : 1
         },
+        contentFilters = {
+            without_pic: function (index, row) { 
+                var $row = $(row);
+                return $row.has(".page_post_sized_thumbs").length == 0;
+            },
+            without_text: function (index, row) { 
+                var $row = $(row);
+                return ($row.has(".wall_post_text").length == 0) || ($.trim($row.find(".wall_post_text").first().text()).length == 0); 
+            },
+            short_text : function (index, row) { 
+                var $row = $(row);
+                return ($row.has(".wall_post_text").length > 0) && ($.trim($row.find(".wall_post_text").first().text()).length < 80); 
+            },
+        },
         feed = document.querySelector("#feed_rows"),
         url = location.href,
         observer,
@@ -85,6 +99,7 @@
             processFeedItem(el, settings[settingName], newClassName);
         });
     }
+    
     function findKeywords(settingName) {
         var keywordsInputName = settingName + "_keywords";
         // Если ключевые слова не заданы, игнорируем настройку.
@@ -103,6 +118,18 @@
             processFeedItem(el, isEnabled, newClassName);
         });
     }
+    
+    function findContentFilter(settingName) {
+        var contentFilter = contentFilters[settingName];
+        var isEnabled = settings[settingName];
+        var $feedRows = $(feed).find(".feed_row");
+        var els = $feedRows.filter(contentFilter);
+        var newClassName = "cffvk-" + settingName;
+        
+        $.each(els, function (index, el) {
+            processFeedItem(el, isEnabled, newClassName);
+        });
+    }
 
     function clean(receivedSettings) {
         if (receivedSettings) {
@@ -110,6 +137,7 @@
         }
         Object.keys(selectorsToFind).forEach(findSelector);
         Object.keys(keywordsToFind).forEach(findKeywords);
+        Object.keys(contentFilters).forEach(findContentFilter);
         console.log("CFFVK: your feed has been cleaned");
     }
 
