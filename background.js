@@ -14,7 +14,15 @@
             "wall_post_more",
             "likes",
             "comments",
-            "ads_news"
+            "ads_news",
+            
+            // keywords
+            "please_share",
+            "freebie",
+            "ask",
+            "pets",
+            "anon",
+            "other"
         ],
         css = {
             groups: "[id^='feed_repost-'], [id^='feed_reposts_'] " +

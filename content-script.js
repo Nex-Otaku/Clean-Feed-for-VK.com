@@ -93,11 +93,11 @@
         var keywords = settings[keywordsInputName];
         var isEnabled = settings[settingName];
         var $feedRows = $(feed).find(".feed_row");
-        var els = (p.match(/[^\s]+/g) === null) 
+        var els = (keywords.match(/[^\s]+/g) === null) 
                 ? $feedRows.search(keywords)
                 : $feedRows.orSearch(keywords);
         var newClassName = "cffvk-" + settingName;
-
+        
         $.each(els, function (index, el) {
             processFeedItem(el, isEnabled, newClassName);
         });
