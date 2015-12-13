@@ -9,6 +9,7 @@
         "48": "icon48.png",
         "128": "icon128.png"
     },
+    "options_page": "options.html",
     "page_action": {
         "default_icon": "icon16.png",
         "default_title": "Настройки",
@@ -30,6 +31,7 @@
                 "*://vk.com/*"
             ],
             "js": [
+                "lib/jquery-2.1.4.min.js",
                 "content-script.js"
             ],
             "run_at": "document_end"
