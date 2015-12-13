@@ -13,7 +13,8 @@
             "event_share",
             "wall_post_more",
             "likes",
-            "comments"
+            "comments",
+            "ads_news"
         ],
         css = {
             groups: "[id^='feed_repost-'], [id^='feed_reposts_'] " +

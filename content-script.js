@@ -43,7 +43,8 @@
                     ":not(.wall_post_source_icon)",
             wall_post_more: ".wall_post_more",
             likes: ".post_like_icon.no_likes",
-            comments: ".reply_link"
+            comments: ".reply_link",
+            ads_news: ".ads_ads_news_wrap"
         },
         feed = document.querySelector("#feed_rows"),
         url = location.href,
