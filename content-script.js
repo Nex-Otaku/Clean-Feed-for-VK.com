@@ -58,11 +58,15 @@
         contentFilters = {
             without_pic: function (index, row) { 
                 var $row = $(row);
-                return $row.has(".page_post_sized_thumbs").length == 0;
+                var questionUserIgnore = $row.has(".feed_ignore_label").length > 0;
+                var hasPicture = $row.has(".page_post_sized_thumbs").length > 0;
+                return !questionUserIgnore && !hasPicture;
             },
             without_text: function (index, row) { 
                 var $row = $(row);
-                return ($row.has(".wall_post_text").length == 0) || ($.trim($row.find(".wall_post_text").first().text()).length == 0); 
+                var questionUserIgnore = $row.has(".feed_ignore_label").length > 0;
+                var hasText = ($row.has(".wall_post_text").length > 0) && ($.trim($row.find(".wall_post_text").first().text()).length > 0);
+                return !questionUserIgnore && !hasText; 
             },
             short_text : function (index, row) { 
                 var $row = $(row);
