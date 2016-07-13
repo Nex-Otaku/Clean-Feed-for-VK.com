@@ -112,10 +112,14 @@
         }
         var keywords = settings[keywordsInputName];
         var isEnabled = settings[settingName];
-        var $feedRows = $(feed).find(".feed_row");
+        // Выбираем текстовые блоки постов.
+        // Позже, функция "processFeedItem" сама "пройдётся вверх"
+        // и определит корневой блок поста ".feed_row",
+        // к которому относится текст ".wall_post_text".
+        var $feedRowsText = $(feed).find(".feed_row .wall_post_text");
         var els = (keywords.match(/[^\s]+/g) === null) 
-                ? $feedRows.search(keywords)
-                : $feedRows.orSearch(keywords);
+                ? $feedRowsText.search(keywords)
+                : $feedRowsText.orSearch(keywords);
         var newClassName = "cffvk-" + settingName;
         
         $.each(els, function (index, el) {
